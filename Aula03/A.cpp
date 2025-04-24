@@ -15,37 +15,25 @@ int main()
         {
             cin >> doces[j];
         }
-        sort(doces.begin(), doces.end());
+        sort(doces.rbegin(), doces.rend());
+        vector<long long> prefix_sum(num_doces);
+        prefix_sum[0] = doces[0];
+        for (int j = 1; j < num_doces; ++j)
+        {
+            prefix_sum[j] = prefix_sum[j - 1] + doces[j];
+        }
         for (int j = 0; j < num_consultas; j++)
         {
-            int consulta = 0;
+            int consulta;
             cin >> consulta;
-            auto it = lower_bound(doces.begin(), doces.end(), consulta);
-            // 3. Verificar os elementos vizinhos
-            if (it == doces.begin())
+            auto it = lower_bound(prefix_sum.begin(), prefix_sum.end(), consulta);
+            if (it == prefix_sum.end())
             {
-                // A consulta é menor que o primeiro elemento
-                std::cout << "O valor mais próximo é: " << *it << std::endl;
-            }
-            else if (it == doces.end())
-            {
-                // A consulta é maior que o último elemento
-                std::cout << "O valor mais próximo é: " << *(it - 1) << std::endl;
+                cout << -1 << endl;
             }
             else
             {
-                // A consulta está no meio do vetor
-                int anterior = *(it - 1);
-                int atual = *it;
-
-                if (std::abs(consulta - anterior) <= std::abs(consulta - atual))
-                {
-                    std::cout << "O valor mais próximo é: " << anterior << std::endl;
-                }
-                else
-                {
-                    std::cout << "O valor mais próximo é: " << atual << std::endl;
-                }
+                cout << distance(prefix_sum.begin(), it) + 1 << endl;
             }
         }
     }

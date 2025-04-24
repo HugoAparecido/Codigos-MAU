@@ -1,54 +1,37 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
-int buscaBinaria(const std::vector<int> &arr, int alvo, int qtd_consultas)
-{
-    int esquerda = 0;
-    int direita = arr.size() - 1;
 
-    while (esquerda <= direita)
-    {
-        qtd_consultas++;
-        int meio = esquerda + (direita - esquerda) / 2; // Evita overflow para vetores grandes
-
-        if (arr[meio] == alvo)
-        {
-            return meio; // Elemento encontrado na posição 'meio'
-        }
-        else if (arr[meio] < alvo)
-        {
-            esquerda = meio + 1; // Alvo está na metade direita
-        }
-        else
-        {
-            direita = meio - 1; // Alvo está na metade esquerda
-        }
-    }
-
-    return -1; // Elemento não encontrado
-}
 int main()
 {
-    int elementos_array = 0, consulta = 0, qtd_consultas_1 = 0, qtd_consultas_2 = 1;
-    cin >> elementos_array;
-    vector<int> numeros(elementos_array);
-    for (int i = 0; i < elementos_array; i++)
-    {
-        cin >> numeros[i];
+    int num_elementos, qtd_percorrido_1 = 0, qtd_percorrido_2 = 0;
+    cin >> num_elementos;
+    vector<pair<int, int>> elementos(num_elementos);
+    int indice = 0;
+    for (auto& par : elementos) {
+        std::cin >> par.first;
+        par.second = indice + 1;
+        indice++;
     }
-    sort(numeros.begin(), numeros.end());
-    cin >> consulta;
-    vector<int> consultas(consulta);
-    for (int i = 0; i < consulta; i++)
+    reverse(elementos.begin(), elementos.end()); // Inverte a ordem dos elementos
+    int num_consultas;
+    cin >> num_consultas;
+    for (int i = 0; i < num_consultas; i++)
     {
-        cin >> consultas[i];
-        for (int j = 0; j < consultas[i]; j++)
+        int consulta;
+        cin >> consulta;
+        qtd_percorrido_2++;
+        auto it = find_if(elementos.begin(), elementos.end(), [&](const pair<int, int>& p){
+return p.first == consulta;
+        });
+        if (it != elementos.end())
         {
-            qtd_consultas_1++;
+            qtd_percorrido_1 +=  it->second;
+            qtd_percorrido_2 += distance(elementos.begin(), it);
         }
-        int indice = buscaBinaria(numeros, consultas[i], qtd_consultas_2);
     }
-    cout << qtd_consultas_1 << " " << qtd_consultas_2 << endl;
+    cout << qtd_percorrido_1 << " "<< qtd_percorrido_2 << endl;
     return 0;
 }
