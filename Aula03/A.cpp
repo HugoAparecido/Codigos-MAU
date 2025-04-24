@@ -21,24 +21,32 @@ int main()
             int consulta = 0;
             cin >> consulta;
             auto it = lower_bound(doces.begin(), doces.end(), consulta);
-             // 3. Verificar os elementos vizinhos
-    if (it == doces.begin()) {
-        // A consulta é menor que o primeiro elemento
-        std::cout << "O valor mais próximo é: " << *it << std::endl;
-    } else if (it == doces.end()) {
-        // A consulta é maior que o último elemento
-        std::cout << "O valor mais próximo é: " << *(it - 1) << std::endl;
-    } else {
-        // A consulta está no meio do vetor
-        int anterior = *(it - 1);
-        int atual = *it;
+            // 3. Verificar os elementos vizinhos
+            if (it == doces.begin())
+            {
+                // A consulta é menor que o primeiro elemento
+                std::cout << "O valor mais próximo é: " << *it << std::endl;
+            }
+            else if (it == doces.end())
+            {
+                // A consulta é maior que o último elemento
+                std::cout << "O valor mais próximo é: " << *(it - 1) << std::endl;
+            }
+            else
+            {
+                // A consulta está no meio do vetor
+                int anterior = *(it - 1);
+                int atual = *it;
 
-        if (std::abs(consulta - anterior) <= std::abs(consulta - atual)) {
-            std::cout << "O valor mais próximo é: " << anterior << std::endl;
-        } else {
-            std::cout << "O valor mais próximo é: " << atual << std::endl;
-        }
-    }
+                if (std::abs(consulta - anterior) <= std::abs(consulta - atual))
+                {
+                    std::cout << "O valor mais próximo é: " << anterior << std::endl;
+                }
+                else
+                {
+                    std::cout << "O valor mais próximo é: " << atual << std::endl;
+                }
+            }
         }
     }
 }

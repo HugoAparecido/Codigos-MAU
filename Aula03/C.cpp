@@ -2,19 +2,26 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
-int buscaBinaria(const std::vector<int>& arr, int alvo, int qtd_consultas) {
+int buscaBinaria(const std::vector<int> &arr, int alvo, int qtd_consultas)
+{
     int esquerda = 0;
     int direita = arr.size() - 1;
 
-    while (esquerda <= direita) {
+    while (esquerda <= direita)
+    {
         qtd_consultas++;
         int meio = esquerda + (direita - esquerda) / 2; // Evita overflow para vetores grandes
 
-        if (arr[meio] == alvo) {
+        if (arr[meio] == alvo)
+        {
             return meio; // Elemento encontrado na posição 'meio'
-        } else if (arr[meio] < alvo) {
+        }
+        else if (arr[meio] < alvo)
+        {
             esquerda = meio + 1; // Alvo está na metade direita
-        } else {
+        }
+        else
+        {
             direita = meio - 1; // Alvo está na metade esquerda
         }
     }
@@ -42,6 +49,6 @@ int main()
         }
         int indice = buscaBinaria(numeros, consultas[i], qtd_consultas_2);
     }
-    cout << qtd_consultas_1 << " "<< qtd_consultas_2 << endl;
+    cout << qtd_consultas_1 << " " << qtd_consultas_2 << endl;
     return 0;
 }
