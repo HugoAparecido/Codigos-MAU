@@ -10,6 +10,7 @@ int main()
         int candys[num_candys];
         for (int j = 0; j < num_candys; j++)
         {
+            cout << candys[i];
         }
     }
 }
