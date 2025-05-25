@@ -32,7 +32,7 @@ void primos(vector<bool> &nums)
 int quaseprimo(int numero, vector<bool> primos)
 {
     int cont = 0;
-    for (int i = 2; i < numero; i++)
+    for (int i = 2; i <= numero; i++)
     {
         if (primos[i])
         {
@@ -66,8 +66,6 @@ int main()
 
     {
         bool quase_primo = quaseprimo(i, primosarray);
-        cout << "Número é: " << i << endl;
-        cout << quase_primo << endl;
         if (quase_primo)
         {
             qtd_quase_primo++;
