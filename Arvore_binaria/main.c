@@ -10,6 +10,7 @@ typedef struct no
 typedef struct
 {
     No *raiz;
+    int tam;
 } ArvB;
 
 void inserirDireita(No *no, int valor); // Função precisa ser declarada antes de ser usada
@@ -71,6 +72,34 @@ void inserir(ArvB *arv, int valor)
     }
 }
 
+int tamanho(No *raiz)
+{
+    if (raiz == NULL)
+        return 0;
+    else
+        return 1 + tamanho(raiz->esquerda) + tamanho(raiz->direita);
+}
+
+No *inserirNovaVersao(No *raiz, int valor)
+{
+    if (raiz == NULL)
+    {
+        No *novo = (No *)malloc(sizeof(No));
+        novo->conteudo = valor;
+        novo->esquerda = NULL;
+        novo->direita = NULL;
+        return novo;
+    }
+    else
+    {
+        if (valor < raiz->conteudo)
+            raiz->esquerda = inserirNovaVersao(raiz->esquerda, valor);
+        if (valor > raiz->conteudo)
+            raiz->direita = inserirNovaVersao(raiz->direita, valor);
+        return raiz;
+    }
+}
+
 void imprimir(No *raiz)
 {
     if (raiz != NULL)
@@ -87,6 +116,8 @@ int main()
     ArvB arv;
     arv.raiz = NULL;
 
+    No *raiz = NULL;
+
     do
     {
         printf("\n0 - sair\n1 - inserir\n2 - imprimir\n");
@@ -99,13 +130,15 @@ int main()
         case 1:
             printf("Digite um valor: ");
             scanf("%d", &valor);
-            inserir(&arv, valor);
+            // inserir(&arv, valor);
+            raiz = inserirNovaVersao(raiz, valor);
             break;
         case 2:
             printf("\nImpressao da arvore binaria:\n");
-            imprimir(arv.raiz);
+            imprimir(raiz);
+            printf("\n");
+            printf("Tamanho: %d\n", tamanho(raiz));
             break;
-
         default:
             printf("\nOpcao inavalida...\n");
             break;
