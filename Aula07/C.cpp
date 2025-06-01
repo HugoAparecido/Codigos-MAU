@@ -10,43 +10,23 @@ int main()
 {
     int n;
     cin >> n;
-    vector<char> sala1;
-    vector<char> sala2;
-    map<char, int> sala1_quantidade;
-    map<char, int> sala2_quantidade;
+    map<char, int> sala_quantidade;
     int contador = 0;
     while (n--)
     {
         string nome;
         cin >> nome;
-        if (sala1.size() < sala2.size() || (sala1.size() == sala2.size() && sala1_quantidade[nome[0]] < sala2_quantidade[nome[0]]))
+        if (sala_quantidade.find(nome[0]) != sala_quantidade.end())
         {
-            if (sala1_quantidade.find(nome[0]) != sala1_quantidade.end())
-            {
-                sala1_quantidade[nome[0]]++;
-            }
-            else
-            {
-                sala1_quantidade[nome[0]] = 1;
-            }
-            sala1.push_back(nome[0]);
+            sala_quantidade[nome[0]]++;
         }
         else
         {
-            if (sala2_quantidade.find(nome[0]) != sala2_quantidade.end())
-            {
-                sala2_quantidade[nome[0]]++;
-            }
-            else
-            {
-                sala2_quantidade[nome[0]] = 1;
-            }
-            sala2.push_back(nome[0]);
+            sala_quantidade[nome[0]] = 1;
         }
     }
 
-    vector<pair<char, int>> sala1_ordenada(sala1_quantidade.begin(), sala1_quantidade.end());
-    vector<pair<char, int>> sala2_ordenada(sala2_quantidade.begin(), sala2_quantidade.end());
+    vector<pair<char, int>> sala_ordenada(sala_quantidade.begin(), sala_quantidade.end());
 
     auto sort_by_value_decreasing = [](const pair<char, int> &a, const pair<char, int> &b)
     {
@@ -55,21 +35,21 @@ int main()
         return a.first < b.first;
     };
 
-    sort(sala1_ordenada.begin(), sala1_ordenada.end(), sort_by_value_decreasing);
-    sort(sala2_ordenada.begin(), sala2_ordenada.end(), sort_by_value_decreasing);
+    sort(sala_ordenada.begin(), sala_ordenada.end(), sort_by_value_decreasing);
 
-    if (sala1_ordenada[0].first == sala2_ordenada[0].first)
-    {
-        if (sala1_ordenada[0].second == 2)
-            contador += (sala1_ordenada[0].second - 1);
-        if (sala1_ordenada[0].second > 2)
-            contador += (sala1_ordenada[0].second);
+    int resto = sala_ordenada[0].second % 2;
+    int grupo1, grupo2;
+    grupo1 = grupo2 = sala_ordenada[0].second / 2;
+    grupo2 += resto;
 
-        if (sala2_ordenada[0].second > 2)
-            contador += (sala2_ordenada[0].second);
-        if (sala2_ordenada[0].second == 2)
-            contador += (sala2_ordenada[0].second - 1);
-    }
+    if (grupo1 == 2)
+        contador += 1;
+    if (grupo2 == 2)
+        contador += 1;
+    if (grupo1 > 2)
+        contador += grupo1;
+    if (grupo2 > 2)
+        contador += grupo2;
 
     cout << contador << endl;
 
