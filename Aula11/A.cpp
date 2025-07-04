@@ -16,7 +16,6 @@ int main()
 {
     int n;
     cin >> n;
-
     while (n--)
     {
         int q;

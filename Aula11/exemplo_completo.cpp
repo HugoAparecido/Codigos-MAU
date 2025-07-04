@@ -1,5 +1,5 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <numeric> // Para iota, se necessário para inicializar visitados
 
 using namespace std;
