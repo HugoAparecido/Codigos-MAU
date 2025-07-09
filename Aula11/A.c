@@ -52,60 +52,23 @@ int insereAresta(Grafo *gr, int orig, int dest, int eh_digrafo, float peso)
     return 1;
 }
 
-void buscaProfundidade(Grafo *gr, int ini, int *visitado, int cont)
-{
-    int i;
-    visitado[ini] = cont;
-    for (i = 0; i < gr->grau[ini]; i++)
-    {
-        if (!visitado[gr->arestas[ini][i]])
-            buscaProfundidade(gr, gr->arestas[ini][i], visitado, cont + 1);
-    }
-}
 
-int procuraMenorDistancia(float *dist, int *visitado)
+int main()
 {
-    int i, menor = -1, primeiro = 1;
-    for (i = 0; i < NV; i++)
+    int n;
+    scanf("%d", &n);
+    while (n--)
     {
-        if (dist[i] >= 0 && visitado[i] == 0)
+        int q;
+        scanf("%d", &q);
+
+        Grafo *grafo_ex = cria_Grafo(q, q, 0);
+        for (int i = 0; i < q; i++)
         {
-            if (primeiro)
-            {
-                menor = 1;
-                primeiro = 0;
-            }
-            else
-            {
-                if (dist[menor] > dist[i])
-                    menor = i;
-            }
+            int num_atual;
+            scanf("%d", &num_atual);
+            insereAresta(grafo_ex, i, num_atual, 0, 0);
         }
     }
-}
-
-void buscaProfundidade_Grafo(Grafo *gr, int ini, int *visitado)
-{
-    int i, cont = 1;
-    for (i = 0; i < gr->nro_vertices; i++)
-        visitado[i] = 0;
-    buscaProfundidade(gr, ini, visitado, cont);
-}
-
-int main(void)
-{
-    int eh_digrafo = 1;
-    Grafo *gr = cria_Grafo(5, 5, 0);
-    insereAresta(gr, 0, 1, eh_digrafo, 0);
-    insereAresta(gr, 1, 3, eh_digrafo, 0);
-    insereAresta(gr, 1, 2, eh_digrafo, 0);
-    insereAresta(gr, 2, 4, eh_digrafo, 0);
-    insereAresta(gr, 3, 0, eh_digrafo, 0);
-    insereAresta(gr, 3, 4, eh_digrafo, 0);
-    insereAresta(gr, 4, 1, eh_digrafo, 0);
-    int ant[5];
-    int dist[5];
-    menorCaminho_Grafo(gr, 0, ant)
-
     return 0;
 }
